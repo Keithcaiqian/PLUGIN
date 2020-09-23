@@ -184,3 +184,67 @@ this.myPlugin.clone = function (obj, deep) {
         return obj; //递归的终止条件
     }
 }
+
+/**
+ * 函数防抖
+ */
+this.myPlugin.debounce = function (callback, time) {
+    var timer;
+    return function () {
+        clearTimeout(timer);//清除之前的计时
+        var args = arguments; //利用闭包保存参数数组
+        timer = setTimeout(function () {
+            callback.apply(null, args);
+        }, time);
+    }
+}
+
+/**
+ * 函数节流
+ */
+this.myPlugin.throttle = function (callback, time, immediately) {
+    if (immediately === undefined) {
+        immediately = true;
+    }
+    if (immediately) {
+        var t;
+        return function () {
+            if (immediately) {
+                if (!t || Date.now() - t >= time) { //之前没有计时 或 距离上次执行的时间已超过规定的值
+                    callback.apply(null, arguments);
+                    t = Date.now(); //得到的当前时间戳
+                }
+            }
+        }
+    }
+    else {
+        var timer;
+        return function () {
+            if (timer) {
+                return;
+            }
+            var args = arguments; //利用闭包保存参数数组
+            timer = setTimeout(function () {
+                callback.apply(null, args);
+                timer = null;
+            }, time);
+        }
+    }
+}
+
+/**
+ * 函数管道
+ */
+this.myPlugin.pipe = function () {
+    var args = Array.from(arguments);
+    return function (val) {
+        return args.reduce(function (result, func) {
+            return func(result);
+        }, val);
+        // for (var i = 0; i < args.length; i++) {
+        //     var func = args[i];
+        //     val = func(val);
+        // }
+        // return val;
+    }
+}  
