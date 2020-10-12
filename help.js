@@ -248,3 +248,28 @@ this.myPlugin.pipe = function () {
         // return val;
     }
 }  
+/**
+ * 判断字符串char，是32位，还是16位
+ * @param {*} char 
+ */
+this.myPlugin.is32bit = (char, i) => {
+    //如果码点大于了16位二进制的最大值，则其是32位的
+    return char.codePointAt(i) > 0xffff;
+}
+
+/**
+ * 得到一个字符串码点的真实长度
+ * @param {*} str 
+ */
+this.myPlugin.getLengthOfCodePoint = (str) => {
+    var len = 0;
+    for (let i = 0; i < str.length; i++) {
+        //i在索引码元
+        if (is32bit(str, i)) {
+            //当前字符串，在i这个位置，占用了两个码元
+            i++;
+        }
+        len++;
+    }
+    return len;
+}
