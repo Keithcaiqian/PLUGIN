@@ -82,42 +82,6 @@ this.myPlugin.getImgUrl = (file,fun) => {
 }
 
 /**
- * 时间格式化--年月日
- * @param {time} date 时间戳
- */
-this.myPlugin.formatDate = date => {
-    var date = new Date(date)
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    const second = date.getSeconds()
-
-    return [year, month, day].join('-') + ' ' + hour.toString().padStart(2,'0') + ':'
-     + minute.toString().padStart(2,'0') + ':' + second.toString().padStart(2,'0')
-}
-/**
- * 时间格式化--几月几日 几时几分
- * @param {time} date 时间戳
- */
-this.myPlugin.formatTime = (time) => {
-    let date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    const second = date.getSeconds();
-    let formatNumber = n => {
-        n = n.toString();
-        return n[1] ? n : '0' + n
-    };
-
-    return month + '月' + formatNumber(day) + '日' + '' + [hour, minute].map(formatNumber).join(':');
-}
-
-/**
  * 给日期加减天数
  * @param {time} time 时间戳
  * @param {Number} day 要加减的天数
@@ -128,6 +92,41 @@ this.myPlugin.addDeDateDay = (time,day) => {
     let dateTime = date.setDate(date.getDate()+day);
     return dateTime;
 };
+/**
+ * 时间格式化--几月几日 几时几分
+ * @param {time} date 时间戳
+ */
+this.myPlugin.dateFormat = (date,fmt) => {
+    if(!date){
+        return '';
+    }
+    if(!fmt){
+        fmt = "YYYY-mm-dd";
+    }
+    let ret;
+    const opt = {
+        "Y+": date.getFullYear().toString(),        // 年
+        "m+": (date.getMonth() + 1).toString(),     // 月
+        "d+": date.getDate().toString(),            // 日
+        "H+": date.getHours().toString(),           // 时
+        "M+": date.getMinutes().toString(),         // 分
+        "S+": date.getSeconds().toString()          // 秒
+        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+    };
+    for (let k in opt) {
+        ret = new RegExp("(" + k + ")").exec(fmt);
+        if (ret) {
+            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+        };
+    };
+    return fmt;
+
+    // 用法
+    // let date = new Date()
+    // dateFormat(date,"YYYY-mm-dd HH:MM")
+    // dateFormat(date,"YYYY-mm-dd HH")
+    // dateFormat(date,"YYYY年mm月dd日")
+}
 
 /**
  * obj2混合到obj1产生新的对象
