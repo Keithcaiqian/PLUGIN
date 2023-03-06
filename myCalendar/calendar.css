@@ -1,0 +1,140 @@
+/* 日期样式 */
+#calendar{
+    width: 632px;
+    overflow: hidden;
+    font-size: 28px;
+    color: #333;
+    border-radius: 40px;
+    background-color: #fff;
+    position: relative;
+
+    border: 1px solid red;
+    margin: 20px auto;
+}
+#calendar ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+/* 头部 */
+#calendar .cal_header .cal_title{
+    height: 112px;
+    line-height: 112px;
+    text-align: center;
+    border-bottom: 1px solid #e9e9e9;
+    position: relative;
+}
+#calendar .cal_header .cal_title .cal_closeBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 96px;
+    height: 112px;
+    line-height: 112px;
+    text-align: center;
+}
+#calendar .cal_header .cal_dayTitle{
+    height: 64px;
+    line-height: 64px;
+    display: flex;
+}
+#calendar .cal_header .cal_dayTitle .cal_item{
+    font-size: 24px;
+    flex: 1;
+    text-align: center;
+}
+
+/* body区域 */
+#calendar .cal_body{
+    width: 100%;
+    height: 764px;
+    position: relative;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayTitle{
+    font-size: 20px;
+    text-align: center;
+    line-height: 84px;
+    border-top: 1px solid #e9e9e9;
+    -webkit-text-size-adjust: none;
+
+    position: sticky;
+    background-color: #fff;
+    top: 0;
+    z-index: 1;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayBox{
+    display: flex;
+    flex-wrap: wrap;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayBox .cal_item{
+    flex: 0 0 14.286%;
+    height: 88px;
+    text-align: center;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayBox .cal_item.now.active{
+    background-color: #0097a4;
+    color: #fff;
+    border-radius: 8px;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayBox .cal_item.now.lightActive{
+    background-color: #F0FEFF;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayBox .cal_item.now.inactive{
+    color: #999;
+}
+#calendar .cal_body .cal_Wrapper .cal_dayBox .cal_item .cal_tip{
+    font-size: 18px;
+    height: 28px;
+    line-height: 28px;
+}
+
+/* 底部 */
+#calendar .cal_footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 143px;
+    border-top: 1px solid #e9e9e9;
+}
+#calendar .cal_footer .cal_btn{
+    width: 520px;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 8px;
+    color: #fff;
+    background-color: #e9e9e9;
+}
+#calendar .cal_footer .cal_btn.active{
+    background-color: #ea8328;
+}
+
+/*提示小黑条*/
+#calendar #cal_tip{
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    font-size: 18px;
+    color: #fff;
+    height: 32px;
+    line-height: 32px;
+
+    padding: 0 6px;
+    background: rgba(0,0,0,0.80);
+    border-radius: 4px;
+    z-index: 2001;
+}
+#calendar #cal_tip::after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: rgba(0,0,0,0.80);
+}

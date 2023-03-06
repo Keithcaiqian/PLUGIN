@@ -103,6 +103,7 @@ this.myPlugin.dateFormat = (date,fmt) => {
     if(!fmt){
         fmt = "YYYY-mm-dd";
     }
+    var date = new Date(date);
     let ret;
     const opt = {
         "Y+": date.getFullYear().toString(),        // 年
@@ -272,3 +273,89 @@ this.myPlugin.getLengthOfCodePoint = (str) => {
     }
     return len;
 }
+
+//地址输入框自适应高度
+var autoTextarea = function (ele,initPx) {
+    
+};
+
+/**
+ * 文本框高度自适应
+ * @param {initPx} 元素初始高度
+ */
+this.myPlugin.autoTextarea = function (ele, initPx) {
+    ele.style.height = initPx + 'px';
+    let scrollHeight = ele.scrollHeight;
+    ele.style.height = scrollHeight + 'px';
+    return scrollHeight;
+};
+// 调用
+// var text = document.getElementById("textarea");
+// autoTextarea(text);
+
+/**
+ *截取url的参数 
+ *@param {name} str
+ */
+this.myPlugin.getQueryString = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+};
+
+/**
+ * 复制文字 
+ *@param {text} str 要复制的文本
+ */
+this.myPlugin.copyText = function(text) {
+    var textarea = document.createElement('input');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    var currentFocus = document.activeElement;//当前获得焦点的元素
+    document.getElementsByTagName('body')[0].append(textarea);
+    textarea.focus();
+    textarea.select();
+    var flag = document.execCommand("copy");//执行复制
+    textarea.remove();
+    currentFocus.focus();
+    return flag;
+};
+
+/**
+ * 使一个非单例的函数变成一个单例的函数 
+ *@param {func} 函数
+ */
+this.myPlugin.getSingleFunc = function (func) {
+    var result = null;
+    return function () {
+        if (!result) {
+            result = func.apply(this, arguments);
+        }
+        return result;
+    }
+};
+
+/*
+* str 文字 
+* w 盒子宽度 
+* h 盒子高度 
+* fontSize 字体大小 
+* 根据文字多少生成等比例缩放生成的元素 
+* */ 
+var createDomFromFont = function (str,w,h,fontSize) { 
+    let area = w * h;//外层盒子面积 
+
+    $('body').append($(``)); 
+    let dom = $('#getBoxSizeFromFont'); 
+    let domArea = dom[0].offsetWidth * dom[0].offsetHeight; //获得文字所占面积 
+    dom.remove(); 
+
+    let itemStyle = `display: inline-block;word-break: break-all;font-size: ${fontSize}px`; 
+    if(domArea > area){ 
+        var itemW = Math.sqrt(domArea * w / h);//要缩放盒子的宽度 
+        var scale = w / itemW;//缩放比例 
+        itemStyle += `width:${itemW}px;transform-origin: left center;transform:scale(${scale})`; 
+    } 
+    return `<div style="${itemStyle}">${str}</div>`; 
+};

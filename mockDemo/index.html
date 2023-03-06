@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./mock.js"></script>
+
+    <script>
+        // 定义数据
+        var mock = function(){
+            var Random = Mock.Random;
+            Mock.mock('demo.js',{
+                "errmsg":[],
+                "error":0,
+                "time":1616719886,
+                "data":{
+                    "time|1000000000-1999999999":10000000000,
+                    "order":{
+                        "takeawayAddress":{
+                            "city":Random.province(),
+                            "suburb":Random.city(),
+                            "address":Random.zip(),
+                        },
+                        "poundageInfo":{
+                            "name":'No poundage'
+                        },
+                        "amount|100-999":100,
+                        "integral_total|100-999":100,
+                        "paidIn|100-999":100,
+                        "perPayTrans|4":[{
+                            "payName|1":['pos','cash','支付宝','微信'],
+                            "amount|100-999":100,
+                        }],
+                        "itemList|4":[{
+                            "name|1":['大头鱼','小偷与','盘调剖与','小弟弟'],
+                            "price|100-999":100,
+                            "count|100-999":100,
+                            "Operator":{
+                                "creat":Random.name()
+                            }
+                        }],
+                    },
+                    "reason":Random.paragraph(),
+                    "userInfo":{
+                        "username":Random.name()
+                    },
+                    "member":{
+                        "memberMobile|123123-43432":3434234,
+                        "memberName": Random.name()
+                    },
+                    "restaurant":{
+                        "RName": Random.name(),
+                    },
+                    "integration|1-100":5,
+                    "integral|1-100":5,
+                    "transAmount|100-999":100,
+                    "point|100-999":100,
+                    "paymentMethod|1":['sum','other'],
+                    "pay|4":[{
+                        "type|1":['pos','cash','支付宝','微信'],
+                        "amount|100-999":100,
+                    }],
+                    "id":Random.id(),
+                    "member_trans_type|1":['recharge','xiaofei','xiaochu','dikou']
+                }
+            })
+        };
+        // 封装ajax请求
+        var mockAjax = function (url,fun) {
+            $.ajax({
+                url:url,
+                type:'get',
+                dataType:'json',
+                success(data){
+                    fun(data.data)
+                }
+            })
+        };
+
+        
+        mock();
+
+
+        //使用
+        var findServerOrderByOrderIdData = function (id,fun) {
+            // showLoadingPage();
+            // let options={
+            //     id
+            // };
+            // options.successFunction=function (data) {
+            //     hideLoadingPage();
+            //     if (data.error) {
+            //         showErrorFunction(data.errmsg[0]);
+            //     }else {
+            //         if(fun){
+            //             fun(data.data);
+            //         }
+            //     }
+            // };
+            // OrderingSystem.findServerOrderByOrderId(options);
+            mockAjax('js/Account.js',fun);
+        };
+    </script>
+</body>
+</html>

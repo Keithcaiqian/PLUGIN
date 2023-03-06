@@ -4,8 +4,9 @@
 #  使用
 Sortable.create(el, {
     animation: 150,  // 动画
-    handle: ".dragBtn",  // 哪个元素可以拖放
+    handle: ".handle",  // 拖放元素的手柄
     ghostClass: "sortable-ghost",//定义拖动元素的class，可提前预设样式
+    draggable:'.item' //被拖动的元素
 });
 
 GitHub原项目地址：

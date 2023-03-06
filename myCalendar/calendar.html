@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=720px,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>研发需求进展管理</title>
+    <link rel="stylesheet/less" href="../less/reset.less"/>
+    <link rel="stylesheet" href="../css/calendar.css">
+
+</head>
+<body>
+    <div id="calendar"></div>
+    <script src="../../../assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+
+    <script src="../jsLib/calendar.js"></script>
+    <script>
+        let day = new Date(),
+            year = day.getFullYear(),
+            month = day.getMonth(),
+            date = day.getDate();
+        let cal = new Cal_date({
+            el:document.getElementById('calendar'),
+            // date:new Date(year,month-6,date),//显示在屏幕中间的日期
+            showFuture:false,
+            tipWord:'请选择结束时间',
+            activeArr:[new Date(year,month-3,date).getTime(),new Date(year,month,date).getTime()]
+        });
+        cal.on('confirm',function (data) {
+            console.log(this)
+            console.log(data)
+        });
+        cal.on('close',function (data) {
+            console.log(this)
+            console.log(data)
+            cal.destroy();
+        });
+        cal.on('destroy',function (data,a,b) {
+            console.log(this)
+            console.log(data,a,b)
+        });
+    </script>
+</body>
+</html>
